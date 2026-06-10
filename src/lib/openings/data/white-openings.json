@@ -1,0 +1,130 @@
+[
+  {
+    "id": "italian-game",
+    "name": "Italian Game",
+    "eco": "C50-C59",
+    "color": "white",
+    "category": "Open Games (1.e4 e5)",
+    "description": "One of the oldest and most classic openings. White aims to control the center and develop pieces quickly toward the kingside.",
+    "difficulty": "beginner",
+    "moves": [
+      { "san": "e4",  "from": "e2", "to": "e4", "isOpponent": false, "annotation": "Control the center — the most important squares." },
+      { "san": "e5",  "from": "e7", "to": "e5", "isOpponent": true },
+      { "san": "Nf3", "from": "g1", "to": "f3", "isOpponent": false, "annotation": "Develop the knight and attack the e5 pawn." },
+      { "san": "Nc6", "from": "b8", "to": "c6", "isOpponent": true },
+      { "san": "Bc4", "from": "f1", "to": "c4", "isOpponent": false, "annotation": "The Italian move — bishop targets the f7 weakness." },
+      { "san": "Bc5", "from": "f8", "to": "c5", "isOpponent": true },
+      { "san": "c3",  "from": "c2", "to": "c3", "isOpponent": false, "annotation": "Prepare d4 to grab more center space." },
+      { "san": "Nf6", "from": "g8", "to": "f6", "isOpponent": true },
+      { "san": "d4",  "from": "d2", "to": "d4", "isOpponent": false, "annotation": "Strike in the center — the Giuoco Piano main line." }
+    ],
+    "opponentAlternatives": {
+      "5": [
+        { "san": "Bc5", "from": "f8", "to": "c5", "name": "Giuoco Piano", "popularity": 45 },
+        { "san": "Nf6", "from": "g8", "to": "f6", "name": "Two Knights Defense", "popularity": 35 },
+        { "san": "Be7", "from": "f8", "to": "e7", "name": "Hungarian Defense", "popularity": 10 }
+      ]
+    }
+  },
+  {
+    "id": "ruy-lopez",
+    "name": "Ruy López (Spanish Game)",
+    "eco": "C60-C99",
+    "color": "white",
+    "category": "Open Games (1.e4 e5)",
+    "description": "One of the most powerful and deeply analyzed openings. White puts indirect pressure on the e5 pawn by attacking the knight that defends it.",
+    "difficulty": "intermediate",
+    "moves": [
+      { "san": "e4",  "from": "e2", "to": "e4", "isOpponent": false, "annotation": "Control the center." },
+      { "san": "e5",  "from": "e7", "to": "e5", "isOpponent": true },
+      { "san": "Nf3", "from": "g1", "to": "f3", "isOpponent": false, "annotation": "Attack the e5 pawn and develop." },
+      { "san": "Nc6", "from": "b8", "to": "c6", "isOpponent": true },
+      { "san": "Bb5", "from": "f1", "to": "b5", "isOpponent": false, "annotation": "The Spanish move — pins the Nc6 against the king." },
+      { "san": "a6",  "from": "a7", "to": "a6", "isOpponent": true },
+      { "san": "Ba4", "from": "b5", "to": "a4", "isOpponent": false, "annotation": "Retreat but maintain the pin." },
+      { "san": "Nf6", "from": "g8", "to": "f6", "isOpponent": true },
+      { "san": "O-O", "from": "e1", "to": "g1", "isOpponent": false, "annotation": "Castle kingside for safety and connect rooks." }
+    ],
+    "opponentAlternatives": {
+      "5": [
+        { "san": "a6",  "from": "a7", "to": "a6", "name": "Morphy Defense", "popularity": 60 },
+        { "san": "Nf6", "from": "g8", "to": "f6", "name": "Berlin Defense", "popularity": 25 },
+        { "san": "d6",  "from": "d7", "to": "d6", "name": "Steinitz Defense", "popularity": 8 }
+      ]
+    }
+  },
+  {
+    "id": "london-system",
+    "name": "London System",
+    "eco": "D02",
+    "color": "white",
+    "category": "Closed Games (1.d4)",
+    "description": "A solid, flexible system for White. The bishop on f4 and pawn structure are easy to learn and hard to crack.",
+    "difficulty": "beginner",
+    "moves": [
+      { "san": "d4",  "from": "d2", "to": "d4", "isOpponent": false, "annotation": "Control the center with the queen's pawn." },
+      { "san": "d5",  "from": "d7", "to": "d5", "isOpponent": true },
+      { "san": "Nf3", "from": "g1", "to": "f3", "isOpponent": false, "annotation": "Develop the knight." },
+      { "san": "Nf6", "from": "g8", "to": "f6", "isOpponent": true },
+      { "san": "Bf4", "from": "c1", "to": "f4", "isOpponent": false, "annotation": "The London bishop — the key piece of this system." },
+      { "san": "e6",  "from": "e7", "to": "e6", "isOpponent": true },
+      { "san": "e3",  "from": "e2", "to": "e3", "isOpponent": false, "annotation": "Support d4 and open the f1 bishop diagonal." },
+      { "san": "c5",  "from": "c7", "to": "c5", "isOpponent": true },
+      { "san": "c3",  "from": "c2", "to": "c3", "isOpponent": false, "annotation": "Solidify d4. The London setup is complete." }
+    ],
+    "opponentAlternatives": {
+      "3": [
+        { "san": "Nf6", "from": "g8", "to": "f6", "name": "Standard", "popularity": 50 },
+        { "san": "e6",  "from": "e7", "to": "e6", "name": "Passive setup", "popularity": 25 },
+        { "san": "c5",  "from": "c7", "to": "c5", "name": "Aggressive", "popularity": 20 }
+      ]
+    }
+  },
+  {
+    "id": "queens-gambit",
+    "name": "Queen's Gambit",
+    "eco": "D06-D69",
+    "color": "white",
+    "category": "Closed Games (1.d4)",
+    "description": "White offers the c4 pawn to gain central control. One of the most famous and trusted openings at all levels.",
+    "difficulty": "intermediate",
+    "moves": [
+      { "san": "d4",  "from": "d2", "to": "d4", "isOpponent": false, "annotation": "Occupy the center." },
+      { "san": "d5",  "from": "d7", "to": "d5", "isOpponent": true },
+      { "san": "c4",  "from": "c2", "to": "c4", "isOpponent": false, "annotation": "The Queen's Gambit — offer a pawn for central dominance." },
+      { "san": "e6",  "from": "e7", "to": "e6", "isOpponent": true },
+      { "san": "Nc3", "from": "b1", "to": "c3", "isOpponent": false, "annotation": "Develop the knight and support the center." },
+      { "san": "Nf6", "from": "g8", "to": "f6", "isOpponent": true },
+      { "san": "Bg5", "from": "c1", "to": "g5", "isOpponent": false, "annotation": "Pin the Nf6 — classical Queen's Gambit Declined." },
+      { "san": "Be7", "from": "f8", "to": "e7", "isOpponent": true },
+      { "san": "e3",  "from": "e2", "to": "e3", "isOpponent": false, "annotation": "Solidify the center and prepare to castle." }
+    ],
+    "opponentAlternatives": {
+      "3": [
+        { "san": "e6",  "from": "e7", "to": "e6", "name": "QGD", "popularity": 45 },
+        { "san": "dxc4","from": "d5", "to": "c4", "name": "QGA", "popularity": 30 },
+        { "san": "c6",  "from": "c7", "to": "c6", "name": "Slav Defense", "popularity": 20 }
+      ]
+    }
+  },
+  {
+    "id": "kings-indian-attack",
+    "name": "King's Indian Attack",
+    "eco": "A07-A08",
+    "color": "white",
+    "category": "Flank Openings",
+    "description": "A flexible system where White mirrors King's Indian Defense ideas. Great against many Black setups.",
+    "difficulty": "intermediate",
+    "moves": [
+      { "san": "Nf3", "from": "g1", "to": "f3", "isOpponent": false, "annotation": "Start with the knight — flexible and solid." },
+      { "san": "d5",  "from": "d7", "to": "d5", "isOpponent": true },
+      { "san": "g3",  "from": "g2", "to": "g3", "isOpponent": false, "annotation": "Prepare to fianchetto the bishop." },
+      { "san": "Nf6", "from": "g8", "to": "f6", "isOpponent": true },
+      { "san": "Bg2", "from": "f1", "to": "g2", "isOpponent": false, "annotation": "The fianchettoed bishop — powerful long diagonal." },
+      { "san": "e6",  "from": "e7", "to": "e6", "isOpponent": true },
+      { "san": "O-O", "from": "e1", "to": "g1", "isOpponent": false, "annotation": "Castle early for king safety." },
+      { "san": "Be7", "from": "f8", "to": "e7", "isOpponent": true },
+      { "san": "d3",  "from": "d2", "to": "d3", "isOpponent": false, "annotation": "Set up the KIA pawn structure." }
+    ]
+  }
+]

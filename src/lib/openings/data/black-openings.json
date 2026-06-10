@@ -1,0 +1,146 @@
+[
+  {
+    "id": "sicilian-najdorf",
+    "name": "Sicilian Defense — Najdorf",
+    "eco": "B90-B99",
+    "color": "black",
+    "category": "Semi-Open Games (vs 1.e4)",
+    "description": "The most popular and combative response to 1.e4. The Najdorf variation is a favorite of world champions from Fischer to Kasparov.",
+    "difficulty": "advanced",
+    "moves": [
+      { "san": "e4",  "from": "e2", "to": "e4", "isOpponent": true },
+      { "san": "c5",  "from": "c7", "to": "c5", "isOpponent": false, "annotation": "The Sicilian — fight for the center without mirroring." },
+      { "san": "Nf3", "from": "g1", "to": "f3", "isOpponent": true },
+      { "san": "d6",  "from": "d7", "to": "d6", "isOpponent": false, "annotation": "Support the e5 square and prepare Nf6." },
+      { "san": "d4",  "from": "d2", "to": "d4", "isOpponent": true },
+      { "san": "cxd4","from": "c5", "to": "d4", "isOpponent": false, "annotation": "Trade the c-pawn for White's d-pawn — open the c-file." },
+      { "san": "Nxd4","from": "f3", "to": "d4", "isOpponent": true },
+      { "san": "Nf6", "from": "g8", "to": "f6", "isOpponent": false, "annotation": "Develop and attack e4." },
+      { "san": "Nc3", "from": "b1", "to": "c3", "isOpponent": true },
+      { "san": "a6",  "from": "a7", "to": "a6", "isOpponent": false, "annotation": "The Najdorf move — prevent Bb5 and prepare b5 expansion." }
+    ],
+    "opponentAlternatives": {
+      "8": [
+        { "san": "Nc3", "from": "b1", "to": "c3", "name": "Scheveningen/Najdorf", "popularity": 55 },
+        { "san": "Nb3", "from": "d4", "to": "b3", "name": "English Attack setup", "popularity": 20 },
+        { "san": "Be3", "from": "c1", "to": "e3", "name": "English Attack", "popularity": 15 }
+      ]
+    }
+  },
+  {
+    "id": "french-defense",
+    "name": "French Defense",
+    "eco": "C00-C19",
+    "color": "black",
+    "category": "Semi-Open Games (vs 1.e4)",
+    "description": "A solid and strategic defense. Black builds a strong pawn chain and counterattacks White's center.",
+    "difficulty": "intermediate",
+    "moves": [
+      { "san": "e4",  "from": "e2", "to": "e4", "isOpponent": true },
+      { "san": "e6",  "from": "e7", "to": "e6", "isOpponent": false, "annotation": "The French — prepare d5 and build a solid structure." },
+      { "san": "d4",  "from": "d2", "to": "d4", "isOpponent": true },
+      { "san": "d5",  "from": "d7", "to": "d5", "isOpponent": false, "annotation": "Challenge the center immediately." },
+      { "san": "Nc3", "from": "b1", "to": "c3", "isOpponent": true },
+      { "san": "Nf6", "from": "g8", "to": "f6", "isOpponent": false, "annotation": "Develop and attack e4." },
+      { "san": "Bg5", "from": "c1", "to": "g5", "isOpponent": true },
+      { "san": "Be7", "from": "f8", "to": "e7", "isOpponent": false, "annotation": "Prepare to unpin with Be7." },
+      { "san": "e5",  "from": "e4", "to": "e5", "isOpponent": true },
+      { "san": "Nfd7","from": "f6", "to": "d7", "isOpponent": false, "annotation": "The knight retreats — Black will attack with c5 next." }
+    ],
+    "opponentAlternatives": {
+      "4": [
+        { "san": "Nc3", "from": "b1", "to": "c3", "name": "Classical/Winawer", "popularity": 50 },
+        { "san": "e5",  "from": "e4", "to": "e5", "name": "Advance Variation", "popularity": 25 },
+        { "san": "Nd2", "from": "b1", "to": "d2", "name": "Tarrasch Variation", "popularity": 20 }
+      ]
+    }
+  },
+  {
+    "id": "caro-kann",
+    "name": "Caro-Kann Defense",
+    "eco": "B10-B19",
+    "color": "black",
+    "category": "Semi-Open Games (vs 1.e4)",
+    "description": "A solid and reliable defense. Black gets a good pawn structure and can develop the light-squared bishop outside the pawn chain.",
+    "difficulty": "intermediate",
+    "moves": [
+      { "san": "e4",  "from": "e2", "to": "e4", "isOpponent": true },
+      { "san": "c6",  "from": "c7", "to": "c6", "isOpponent": false, "annotation": "The Caro-Kann — prepare d5 with pawn support." },
+      { "san": "d4",  "from": "d2", "to": "d4", "isOpponent": true },
+      { "san": "d5",  "from": "d7", "to": "d5", "isOpponent": false, "annotation": "Strike the center. The c6 pawn backs it up." },
+      { "san": "Nc3", "from": "b1", "to": "c3", "isOpponent": true },
+      { "san": "dxe4","from": "d5", "to": "e4", "isOpponent": false, "annotation": "Trade pawns — classical approach." },
+      { "san": "Nxe4","from": "c3", "to": "e4", "isOpponent": true },
+      { "san": "Bf5", "from": "c8", "to": "f5", "isOpponent": false, "annotation": "Develop the light bishop — Black's key advantage in the Caro." },
+      { "san": "Ng3", "from": "e4", "to": "g3", "isOpponent": true },
+      { "san": "Bg6", "from": "f5", "to": "g6", "isOpponent": false, "annotation": "Retreat safely. The bishop stays active on g6." }
+    ],
+    "opponentAlternatives": {
+      "4": [
+        { "san": "Nc3", "from": "b1", "to": "c3", "name": "Classical", "popularity": 40 },
+        { "san": "e5",  "from": "e4", "to": "e5", "name": "Advance Variation", "popularity": 30 },
+        { "san": "exd5","from": "e4", "to": "d5", "name": "Exchange Variation", "popularity": 20 }
+      ]
+    }
+  },
+  {
+    "id": "kings-indian-defense",
+    "name": "King's Indian Defense",
+    "eco": "E60-E99",
+    "color": "black",
+    "category": "Closed Games (vs 1.d4)",
+    "description": "A hypermodern defense. Black lets White build a big center, then counterattacks it. Aggressive and dynamic.",
+    "difficulty": "advanced",
+    "moves": [
+      { "san": "d4",  "from": "d2", "to": "d4", "isOpponent": true },
+      { "san": "Nf6", "from": "g8", "to": "f6", "isOpponent": false, "annotation": "Develop and control e4." },
+      { "san": "c4",  "from": "c2", "to": "c4", "isOpponent": true },
+      { "san": "g6",  "from": "g7", "to": "g6", "isOpponent": false, "annotation": "Prepare to fianchetto — the King's Indian setup." },
+      { "san": "Nc3", "from": "b1", "to": "c3", "isOpponent": true },
+      { "san": "Bg7", "from": "f8", "to": "g7", "isOpponent": false, "annotation": "The powerful KID bishop — targets the center." },
+      { "san": "e4",  "from": "e2", "to": "e4", "isOpponent": true },
+      { "san": "d6",  "from": "d7", "to": "d6", "isOpponent": false, "annotation": "Support e5 and keep the pawn chain flexible." },
+      { "san": "Nf3", "from": "g1", "to": "f3", "isOpponent": true },
+      { "san": "O-O", "from": "e8", "to": "g8", "isOpponent": false, "annotation": "Castle — king safety and connect rooks." },
+      { "san": "Be2", "from": "f1", "to": "e2", "isOpponent": true },
+      { "san": "e5",  "from": "e7", "to": "e5", "isOpponent": false, "annotation": "The defining KID move — challenge White's center now." }
+    ],
+    "opponentAlternatives": {
+      "5": [
+        { "san": "Nc3", "from": "b1", "to": "c3", "name": "Classical KID", "popularity": 55 },
+        { "san": "Nf3", "from": "g1", "to": "f3", "name": "Four Pawns Attack setup", "popularity": 25 },
+        { "san": "Bg5", "from": "c1", "to": "g5", "name": "Averbakh", "popularity": 10 }
+      ]
+    }
+  },
+  {
+    "id": "queens-gambit-declined",
+    "name": "Queen's Gambit Declined",
+    "eco": "D30-D69",
+    "color": "black",
+    "category": "Closed Games (vs 1.d4)",
+    "description": "A classical and solid response to the Queen's Gambit. Black declines the pawn and builds a strong defensive structure.",
+    "difficulty": "intermediate",
+    "moves": [
+      { "san": "d4",  "from": "d2", "to": "d4", "isOpponent": true },
+      { "san": "d5",  "from": "d7", "to": "d5", "isOpponent": false, "annotation": "Occupy the center." },
+      { "san": "c4",  "from": "c2", "to": "c4", "isOpponent": true },
+      { "san": "e6",  "from": "e7", "to": "e6", "isOpponent": false, "annotation": "Decline the gambit — support d5 with the e-pawn." },
+      { "san": "Nc3", "from": "b1", "to": "c3", "isOpponent": true },
+      { "san": "Nf6", "from": "g8", "to": "f6", "isOpponent": false, "annotation": "Develop actively." },
+      { "san": "Bg5", "from": "c1", "to": "g5", "isOpponent": true },
+      { "san": "Be7", "from": "f8", "to": "e7", "isOpponent": false, "annotation": "Unpin. Black prepares to castle." },
+      { "san": "e3",  "from": "e2", "to": "e3", "isOpponent": true },
+      { "san": "O-O", "from": "e8", "to": "g8", "isOpponent": false, "annotation": "Castle to safety." },
+      { "san": "Nf3", "from": "g1", "to": "f3", "isOpponent": true },
+      { "san": "h6",  "from": "h7", "to": "h6", "isOpponent": false, "annotation": "Challenge the bishop — the Lasker Defense move." }
+    ],
+    "opponentAlternatives": {
+      "6": [
+        { "san": "Bg5", "from": "c1", "to": "g5", "name": "Classical QGD", "popularity": 40 },
+        { "san": "Nf3", "from": "g1", "to": "f3", "name": "QGD Exchange", "popularity": 25 },
+        { "san": "cxd5","from": "c4", "to": "d5", "name": "Exchange Variation", "popularity": 20 }
+      ]
+    }
+  }
+]
