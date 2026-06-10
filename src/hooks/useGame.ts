@@ -31,6 +31,19 @@ interface UseGameReturn extends GameState {
   nextMoveAfterWrong: () => void;
 }
 
+// chess.js v1 throws on invalid moves instead of returning null.
+// Only pass promotion when it's actually set (pawn reaching back rank),
+// and wrap in try-catch so a bad move never crashes the app.
+function safeMove(chess: Chess, from: string, to: string, promotion?: string) {
+  try {
+    const opts: { from: string; to: string; promotion?: string } = { from, to };
+    if (promotion) opts.promotion = promotion;
+    return chess.move(opts);
+  } catch {
+    return null;
+  }
+}
+
 export function useGame(
   opening: Opening,
   hintLevel: HintLevel,
@@ -67,7 +80,7 @@ export function useGame(
       if (!move || !move.isOpponent) return;
 
       const nextIndex = moveIndex + 1;
-      const result = chess.move({ from: move.from, to: move.to, promotion: move.promotion ?? "q" });
+      const result = safeMove(chess, move.from, move.to, move.promotion);
       if (!result) return;
 
       const newHistory = [...currentHistory, move.san];
@@ -202,6 +215,54 @@ export function useGame(
     (from: string, to: string) => {
       if (state.status !== "playing" || !isPlayerTurn || !currentMove) return false;
 
+      const chess = chessRef.current;
+
+      // Free play mode (opponentMode 3): accept any legal chess move.
+      // The opening sequence is shown as a suggestion only — no forced moves.
+      if (opponentMode === 3) {
+        const result = safeMove(chess, from, to, currentMove.promotion);
+        if (!result) return false;
+
+        const matchesScript = from === currentMove.from && to === currentMove.to;
+        const newHistory = [...state.history, result.san];
+        const newCorrect = matchesScript ? state.correctMoves + 1 : state.correctMoves;
+        const nextIndex = state.moveIndex + 1;
+
+        if (nextIndex >= opening.moves.length) {
+          setState({
+            fen: chess.fen(),
+            moveIndex: nextIndex,
+            status: "completed",
+            score: Math.round((newCorrect / playerMoveCount) * 100),
+            maxScore: 100,
+            correctMoves: newCorrect,
+            totalPlayerMoves: playerMoveCount,
+            wrongMove: null,
+            history: newHistory,
+            awaitingOpponentChoice: false,
+            opponentChoices: [],
+          });
+          return true;
+        }
+
+        setState({
+          fen: chess.fen(),
+          moveIndex: nextIndex,
+          status: "playing",
+          score: state.score,
+          maxScore: 100,
+          correctMoves: newCorrect,
+          totalPlayerMoves: playerMoveCount,
+          wrongMove: null,
+          history: newHistory,
+          awaitingOpponentChoice: false,
+          opponentChoices: [],
+        });
+        // In free play mode the player manually moves the opponent pieces — no auto-trigger.
+        return true;
+      }
+
+      // Scripted mode (opponentMode 1 or 2): enforce the expected move.
       const expectedFrom = currentMove.from;
       const expectedTo = currentMove.to;
 
@@ -216,8 +277,7 @@ export function useGame(
         return false;
       }
 
-      const chess = chessRef.current;
-      const result = chess.move({ from, to, promotion: currentMove.promotion ?? "q" });
+      const result = safeMove(chess, from, to, currentMove.promotion);
       if (!result) return false;
 
       const newHistory = [...state.history, currentMove.san];
@@ -263,7 +323,7 @@ export function useGame(
 
       return true;
     },
-    [state, currentMove, isPlayerTurn, hintLevel, opening.moves, playerMoveCount, triggerOpponent]
+    [state, currentMove, isPlayerTurn, hintLevel, opponentMode, opening.moves, playerMoveCount, triggerOpponent]
   );
 
   const handlePieceDrop = useCallback(
@@ -298,7 +358,7 @@ export function useGame(
   const handleOpponentChoice = useCallback(
     (alt: OpponentAlternative) => {
       const chess = chessRef.current;
-      const result = chess.move({ from: alt.from, to: alt.to, promotion: "q" });
+      const result = safeMove(chess, alt.from, alt.to, alt.promotion);
       if (!result) return;
 
       const newHistory = [...state.history, alt.san];
@@ -342,12 +402,10 @@ export function useGame(
     (from: string, to: string): boolean => {
       if (opponentMode !== 3 || isPlayerTurn || state.status !== "playing") return false;
       const chess = chessRef.current;
-      const result = chess.move({ from, to, promotion: "q" });
+      const result = safeMove(chess, from, to);
       if (!result) return false;
 
-      const currentOppMove = opening.moves[state.moveIndex];
-      const san = result.san;
-      const newHistory = [...state.history, san];
+      const newHistory = [...state.history, result.san];
       const nextIndex = state.moveIndex + 1;
 
       if (nextIndex >= opening.moves.length) {
@@ -380,7 +438,6 @@ export function useGame(
         awaitingOpponentChoice: false,
         opponentChoices: [],
       });
-      void currentOppMove;
       return true;
     },
     [opponentMode, isPlayerTurn, state, opening.moves, playerMoveCount]
@@ -389,7 +446,7 @@ export function useGame(
   const nextMoveAfterWrong = useCallback(() => {
     if (state.status !== "wrong_move" || !currentMove) return;
     const chess = chessRef.current;
-    const result = chess.move({ from: currentMove.from, to: currentMove.to, promotion: currentMove.promotion ?? "q" });
+    const result = safeMove(chess, currentMove.from, currentMove.to, currentMove.promotion);
     if (!result) return;
 
     const newHistory = [...state.history, currentMove.san];

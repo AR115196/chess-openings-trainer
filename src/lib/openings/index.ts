@@ -3,8 +3,8 @@ import whiteOpenings from "./data/white-openings.json";
 import blackOpenings from "./data/black-openings.json";
 
 const allOpenings: Opening[] = [
-  ...(whiteOpenings as Opening[]),
-  ...(blackOpenings as Opening[]),
+  ...(whiteOpenings as unknown as Opening[]),
+  ...(blackOpenings as unknown as Opening[]),
 ];
 
 export function getOpeningsByColor(color: PlayerColor): Opening[] {

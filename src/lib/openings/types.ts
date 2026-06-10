@@ -18,6 +18,7 @@ export interface OpponentAlternative {
   to: string;
   name?: string;
   popularity: number;
+  promotion?: string;
 }
 
 export interface OpeningVariation {
