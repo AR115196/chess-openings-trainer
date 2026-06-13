@@ -78,6 +78,8 @@ export function GameScreen({
               color={color}
               isPlayerTurn={game.isPlayerTurn}
               opponentMode={opponentMode}
+              selectedSquare={game.selectedSquare}
+              legalMoveSquares={game.legalMoveSquares}
               wrongSquares={wrongSquares}
               onPieceDrop={game.handlePieceDrop}
               onFreeOpponentDrop={game.handleFreeOpponentDrop}

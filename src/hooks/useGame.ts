@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { Chess } from "chess.js";
+import type { Square } from "chess.js";
 import type { Opening, HintLevel, OpponentMode, OpeningMove, OpponentAlternative } from "@/lib/openings/types";
 
 export type GameStatus = "idle" | "playing" | "wrong_move" | "completed";
@@ -23,6 +24,8 @@ interface GameState {
 interface UseGameReturn extends GameState {
   currentMove: OpeningMove | null;
   isPlayerTurn: boolean;
+  selectedSquare: string | null;
+  legalMoveSquares: string[];
   handleSquareClick: (square: string) => void;
   handlePieceDrop: (from: string, to: string) => boolean;
   handleOpponentChoice: (alt: OpponentAlternative) => void;
@@ -335,24 +338,55 @@ export function useGame(
 
   const [selectedSquare, setSelectedSquare] = useState<string | null>(null);
 
+  // Squares the selected piece can legally move to (used for highlights).
+  const legalMoveSquares = useMemo(() => {
+    if (!selectedSquare || !isPlayerTurn || state.status !== "playing") return [];
+    try {
+      const tempChess = new Chess(state.fen);
+      return tempChess
+        .moves({ square: selectedSquare as Square, verbose: true })
+        .map((m) => m.to);
+    } catch {
+      return [];
+    }
+  }, [selectedSquare, isPlayerTurn, state.fen, state.status]);
+
   const handleSquareClick = useCallback(
     (square: string) => {
       if (!isPlayerTurn || state.status !== "playing") {
         setSelectedSquare(null);
         return;
       }
+
+      // Clicking the already-selected square deselects it.
+      if (square === selectedSquare) {
+        setSelectedSquare(null);
+        return;
+      }
+
+      const playerColor = opening.color === "white" ? "w" : "b";
+
       if (selectedSquare) {
-        const moved = applyPlayerMove(selectedSquare, square);
-        if (!moved && square !== selectedSquare) {
+        // If the clicked square has a friendly piece, re-select it
+        // without attempting a move (avoids false wrong-move penalties).
+        const piece = chessRef.current.get(square as Square);
+        if (piece && piece.color === playerColor) {
           setSelectedSquare(square);
-        } else {
-          setSelectedSquare(null);
+          return;
         }
+
+        // Otherwise try to make the move, then always clear the selection.
+        applyPlayerMove(selectedSquare, square);
+        setSelectedSquare(null);
       } else {
-        setSelectedSquare(square);
+        // Only select squares that have a friendly piece.
+        const piece = chessRef.current.get(square as Square);
+        if (piece && piece.color === playerColor) {
+          setSelectedSquare(square);
+        }
       }
     },
-    [isPlayerTurn, state.status, selectedSquare, applyPlayerMove]
+    [isPlayerTurn, state.status, selectedSquare, applyPlayerMove, opening.color]
   );
 
   const handleOpponentChoice = useCallback(
@@ -499,6 +533,8 @@ export function useGame(
     ...state,
     currentMove,
     isPlayerTurn,
+    selectedSquare,
+    legalMoveSquares,
     handleSquareClick,
     handlePieceDrop,
     handleOpponentChoice,
