@@ -7,34 +7,58 @@ interface MoveListProps {
   opening: Opening;
   history: string[];
   currentMoveIndex: number;
+  opponentMode: number;
 }
 
-export function MoveList({ opening, history, currentMoveIndex }: MoveListProps) {
-  // Pair moves into full move rows: [white, black?]
-  const movePairs: { white: string; black?: string; moveNum: number }[] = [];
+export function MoveList({ opening, history, currentMoveIndex, opponentMode }: MoveListProps) {
+  // Mode 1: show the full scripted sequence (player always follows the script).
+  // Modes 2/3: dynamic game — show only played moves plus the current move row.
+  //            Showing the full future script would be misleading after alternatives.
+  const showAllFutureMoves = opponentMode === 1;
+
+  // In dynamic modes, cut off display at the pair that contains the current move.
+  const maxPairStart = showAllFutureMoves
+    ? opening.moves.length
+    : Math.floor(currentMoveIndex / 2) * 2 + 2;
+
+  const movePairs: {
+    whiteSan: string;
+    blackSan?: string;
+    whiteAbsIdx: number;
+    blackAbsIdx: number;
+    moveNum: number;
+  }[] = [];
+
   let moveNum = 1;
-  for (let i = 0; i < opening.moves.length; i += 2) {
-    movePairs.push({
-      moveNum,
-      white: opening.moves[i]?.san ?? "",
-      black: opening.moves[i + 1]?.san,
-    });
+  for (let i = 0; i < maxPairStart && i < opening.moves.length; i += 2) {
+    const whiteAbsIdx = i;
+    const blackAbsIdx = i + 1;
+
+    // Use the actual played SAN from history so alternatives show correctly.
+    // Fall back to scripted SAN only for future (unplayed) moves.
+    const whiteSan = whiteAbsIdx < history.length
+      ? history[whiteAbsIdx]
+      : (opening.moves[whiteAbsIdx]?.san ?? "");
+
+    const blackSan = blackAbsIdx < opening.moves.length
+      ? (blackAbsIdx < history.length ? history[blackAbsIdx] : opening.moves[blackAbsIdx]?.san)
+      : undefined;
+
+    movePairs.push({ whiteSan, blackSan, whiteAbsIdx, blackAbsIdx, moveNum });
     moveNum++;
   }
 
   return (
     <div className="flex flex-col gap-1">
       <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-1">
-        Moves
+        {showAllFutureMoves ? "Moves" : "Move History"}
       </h3>
       <div className="flex flex-col gap-0.5 max-h-48 overflow-y-auto pr-1">
-        {movePairs.map((pair, pairIdx) => {
-          const whiteAbsIdx = pairIdx * 2;
-          const blackAbsIdx = pairIdx * 2 + 1;
-          const whiteIsHistory = whiteAbsIdx < history.length;
-          const blackIsHistory = blackAbsIdx < history.length;
-          const whiteIsCurrent = whiteAbsIdx === currentMoveIndex;
-          const blackIsCurrent = blackAbsIdx === currentMoveIndex;
+        {movePairs.map((pair) => {
+          const whiteIsHistory = pair.whiteAbsIdx < history.length;
+          const blackIsHistory = pair.blackAbsIdx < history.length;
+          const whiteIsCurrent = pair.whiteAbsIdx === currentMoveIndex;
+          const blackIsCurrent = pair.blackAbsIdx === currentMoveIndex;
 
           return (
             <div key={pair.moveNum} className="flex items-center gap-2 rounded-md px-2 py-1 text-sm">
@@ -47,9 +71,9 @@ export function MoveList({ opening, history, currentMoveIndex }: MoveListProps) 
                   ? "text-zinc-300"
                   : "text-zinc-600"
               )}>
-                {pair.white}
+                {pair.whiteSan}
               </span>
-              {pair.black && (
+              {pair.blackSan !== undefined && (
                 <span className={cn(
                   "flex-1 rounded px-1.5 py-0.5 font-mono text-sm",
                   blackIsCurrent
@@ -58,7 +82,7 @@ export function MoveList({ opening, history, currentMoveIndex }: MoveListProps) 
                     ? "text-zinc-300"
                     : "text-zinc-600"
                 )}>
-                  {pair.black}
+                  {pair.blackSan}
                 </span>
               )}
             </div>

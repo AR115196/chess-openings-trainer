@@ -28,6 +28,14 @@ export function GameScreen({
   const game = useGame(opening, hintLevel, opponentMode);
   const completedRef = useRef(false);
 
+  // Reset the guard whenever the game is restarted so a second completion
+  // (after "Restart Opening") correctly fires onComplete again.
+  useEffect(() => {
+    if (game.status === "idle" || game.status === "playing") {
+      completedRef.current = false;
+    }
+  }, [game.status]);
+
   useEffect(() => {
     if (game.status === "completed" && !completedRef.current) {
       completedRef.current = true;
@@ -156,6 +164,7 @@ export function GameScreen({
             opening={opening}
             history={game.history}
             currentMoveIndex={game.moveIndex}
+            opponentMode={opponentMode}
           />
 
           <div className="flex-1" />
