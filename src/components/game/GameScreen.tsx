@@ -6,7 +6,6 @@ import type { Opening, HintLevel, OpponentMode, PlayerColor } from "@/lib/openin
 import { ChessboardWrapper } from "./ChessboardWrapper";
 import { MoveList } from "./MoveList";
 import { HintPanel } from "./HintPanel";
-import { OpponentChoicePanel } from "./OpponentChoicePanel";
 import { WrongMoveAlert } from "./WrongMoveAlert";
 
 interface GameScreenProps {
@@ -81,16 +80,13 @@ export function GameScreen({
               selectedSquare={game.selectedSquare}
               legalMoveSquares={game.legalMoveSquares}
               wrongSquares={wrongSquares}
+              awaitingOpponentChoice={game.awaitingOpponentChoice}
+              opponentChoices={game.opponentChoices}
               onPieceDrop={game.handlePieceDrop}
               onFreeOpponentDrop={game.handleFreeOpponentDrop}
               onSquareClick={game.handleSquareClick}
+              onOpponentChoice={game.handleOpponentChoice}
             />
-            {game.awaitingOpponentChoice && (
-              <OpponentChoicePanel
-                choices={game.opponentChoices}
-                onChoice={game.handleOpponentChoice}
-              />
-            )}
           </div>
         </div>
 
@@ -149,7 +145,7 @@ export function GameScreen({
               : opponentMode === 3
               ? "Now move the opponent's pieces"
               : opponentMode === 2 && game.awaitingOpponentChoice
-              ? "Choose opponent's response"
+              ? "Click an arrow to choose the opponent's reply"
               : "Opponent is thinking..."}
           </div>
 
