@@ -269,6 +269,41 @@ export function useGame(
       const expectedFrom = currentMove.from;
       const expectedTo = currentMove.to;
 
+      // Safety net: if the scripted move is no longer legal in the current position
+      // (can happen when an opponent alternative changed the pawn structure),
+      // accept any legal chess move so the player isn't stuck.
+      const scriptedStillLegal = chessRef.current
+        .moves({ square: expectedFrom as Square, verbose: true })
+        .some((m) => m.to === expectedTo);
+
+      if (!scriptedStillLegal) {
+        const result = safeMove(chess, from, to);
+        if (!result) return false;
+        const newHistory = [...state.history, result.san];
+        const nextIndex = state.moveIndex + 1;
+        if (nextIndex >= opening.moves.length) {
+          setState({
+            fen: chess.fen(), moveIndex: nextIndex, status: "completed",
+            score: Math.round((state.correctMoves / playerMoveCount) * 100),
+            maxScore: 100, correctMoves: state.correctMoves,
+            totalPlayerMoves: playerMoveCount, wrongMove: null,
+            history: newHistory, awaitingOpponentChoice: false, opponentChoices: [],
+          });
+          return true;
+        }
+        const nextMove = opening.moves[nextIndex];
+        setState({
+          fen: chess.fen(), moveIndex: nextIndex, status: "playing",
+          score: state.score, maxScore: 100, correctMoves: state.correctMoves,
+          totalPlayerMoves: playerMoveCount, wrongMove: null,
+          history: newHistory, awaitingOpponentChoice: false, opponentChoices: [],
+        });
+        if (nextMove?.isOpponent) {
+          triggerOpponent(nextIndex, chess, newHistory, state.score, state.correctMoves);
+        }
+        return true;
+      }
+
       if (from !== expectedFrom || to !== expectedTo) {
         // Only penalise moves that are actually legal in chess.
         // Illegal moves (e.g. pawn 5 squares) are silently rejected.

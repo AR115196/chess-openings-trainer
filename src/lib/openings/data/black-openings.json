@@ -49,9 +49,8 @@
     ],
     "opponentAlternatives": {
       "4": [
-        { "san": "Nc3", "from": "b1", "to": "c3", "name": "Classical/Winawer", "popularity": 50 },
-        { "san": "e5",  "from": "e4", "to": "e5", "name": "Advance Variation", "popularity": 25 },
-        { "san": "Nd2", "from": "b1", "to": "d2", "name": "Tarrasch Variation", "popularity": 20 }
+        { "san": "Nc3", "from": "b1", "to": "c3", "name": "Classical / Winawer", "popularity": 70 },
+        { "san": "Nd2", "from": "b1", "to": "d2", "name": "Tarrasch Variation", "popularity": 30 }
       ]
     }
   },
@@ -77,9 +76,8 @@
     ],
     "opponentAlternatives": {
       "4": [
-        { "san": "Nc3", "from": "b1", "to": "c3", "name": "Classical", "popularity": 40 },
-        { "san": "e5",  "from": "e4", "to": "e5", "name": "Advance Variation", "popularity": 30 },
-        { "san": "exd5","from": "e4", "to": "d5", "name": "Exchange Variation", "popularity": 20 }
+        { "san": "Nc3", "from": "b1", "to": "c3", "name": "Classical", "popularity": 65 },
+        { "san": "Nd2", "from": "b1", "to": "d2", "name": "Simpler Variation", "popularity": 35 }
       ]
     }
   },
