@@ -270,7 +270,13 @@ export function useGame(
       const expectedTo = currentMove.to;
 
       if (from !== expectedFrom || to !== expectedTo) {
-        if (hintLevel === 3) {
+        // Only penalise moves that are actually legal in chess.
+        // Illegal moves (e.g. pawn 5 squares) are silently rejected.
+        const isLegalChessMove = chessRef.current
+          .moves({ square: from as Square, verbose: true })
+          .some((m) => m.to === to);
+
+        if (isLegalChessMove && hintLevel === 3) {
           setState((prev) => ({
             ...prev,
             status: "wrong_move",
